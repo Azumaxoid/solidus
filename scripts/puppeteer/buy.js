@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 const users = require('../users.json');
 (async() => {
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: "new",
         slowMo: 50,
         args: ['--lang=ja', '--no-sandbox', '--disabled-setuid-sandbox'] // デフォルトでは言語設定が英語なので日本語に変更
     });
