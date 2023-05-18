@@ -1,6 +1,10 @@
 # frozen_string_literal: true
+require 'new_relic/agent/method_tracer'
 
 class UserPasswordsController < Devise::PasswordsController
+
+  include ::NewRelic::Agent::MethodTracer
+
   # Overridden due to bug in Devise.
   #   respond_with resource, location: new_session_path(resource_name)
   # is generating bad url /session/new.user
@@ -43,4 +47,5 @@ class UserPasswordsController < Devise::PasswordsController
   def new_session_path(resource_name)
     send("new_#{resource_name}_session_path")
   end
+
 end

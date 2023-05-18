@@ -7,6 +7,8 @@ class StoreController < Spree::BaseController
 
   layout 'storefront'
 
+  after_action :record_user
+
   def unauthorized
     render 'shared/auth/unauthorized', layout: Spree::Config[:layout], status: 401
   end
@@ -28,4 +30,11 @@ class StoreController < Spree::BaseController
     flash[:error] = t('spree.order_mutex_error')
     redirect_to cart_path
   end
+
+  def record_user
+    if spree_current_user.present?
+      ::NewRelic::Agent.add_custom_attributes({ email: spree_current_user.login})
+    end
+  end
+
 end

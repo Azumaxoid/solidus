@@ -1,6 +1,10 @@
 # frozen_string_literal: true
+require 'new_relic/agent/method_tracer'
 
 class LinkToCartComponent < ViewComponent::Base
+
+  include ::NewRelic::Agent::MethodTracer
+
   delegate :current_order, :spree, to: :helpers
 
   def call
@@ -20,4 +24,8 @@ class LinkToCartComponent < ViewComponent::Base
   def empty_current_order?
     current_order.nil? || current_order.item_count.zero?
   end
+
+  add_method_tracer :call, 'Custom/LinkToCartComponent:call'
+  add_method_tracer :text, 'Custom/LinkToCartComponent:text'
+
 end

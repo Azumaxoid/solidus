@@ -1,6 +1,10 @@
 # frozen_string_literal: true
+require 'new_relic/agent/method_tracer'
 
 class UserSessionsController < Devise::SessionsController
+
+  include ::NewRelic::Agent::MethodTracer
+
   # This is included in ControllerHelpers::Order.  We just want to call
   # it after someone has successfully logged in.
   after_action :set_current_order, only: :create
@@ -56,4 +60,6 @@ class UserSessionsController < Devise::SessionsController
       }.to_json
     }
   end
+
+  add_method_tracer :create, 'Custom/UserSessionsController:create'
 end
