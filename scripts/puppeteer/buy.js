@@ -2,9 +2,10 @@
 
 const puppeteer = require('puppeteer');
 const users = require('../users.json');
+const HEADLESS = process.env.HEADLESS === undefined ? 'new' : process.env.HEADLESS !== 'false';
 (async() => {
     const browser = await puppeteer.launch({
-        headless: "new",
+        headless: HEADLESS,
         slowMo: 50,
         args: ['--lang=ja', '--no-sandbox', '--disabled-setuid-sandbox'] // デフォルトでは言語設定が英語なので日本語に変更
     });
@@ -24,7 +25,7 @@ const users = require('../users.json');
 
     const buy = async (user) => {
         console.log(`Buy for ${user.email}`)
-        await page.goto('http://localhost:3000')
+        await page.goto('http://localhost:3000', {timeout: 30000})
         await page.click(".auth-link")
         await page.click("#spree_user_email")
         await page.type("#spree_user_email", user.email)
@@ -68,9 +69,10 @@ const users = require('../users.json');
         } catch (e) {
             // Do nothing
         } finally {
-            await page.goto('http://localhost:3000')
+            await page.goto('http://localhost:3000', {timeout: 30000})
             await page.click(".auth-link")
             await page.click(".button-primary")
         }
     }
+    await browser.close();
 })();

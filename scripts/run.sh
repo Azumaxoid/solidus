@@ -2,7 +2,7 @@
 . ~/.bashrc
 cd ~/solidus
 bundle exec rails server -b 0.0.0.0 > /tmp/solidus.log &
-echo "サンプルサービスが起動しました。 http://$HOSTNAME.$_SANDBOX_ID.instruqt.io:8000 にアクセスしてみましょう。"
+echo "サンプルサービスが起動しました。 http://$HOSTNAME.$_SANDBOX_ID.instruqt.io:3000 にアクセスしてみましょう。"
 export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 nvm install 16 && nvm use 16
 cd ~/solidus/scripts/puppeteer
