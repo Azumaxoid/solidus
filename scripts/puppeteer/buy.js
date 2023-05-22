@@ -2,6 +2,9 @@
 
 const puppeteer = require('puppeteer');
 const users = require('../users.json');
+const HOST = process.env.HOST || 'localhost'
+const URL = `http://${HOST}:3000`;
+
 const HEADLESS = process.env.HEADLESS === undefined ? 'new' : process.env.HEADLESS !== 'false';
 (async() => {
     const browser = await puppeteer.launch({
@@ -25,13 +28,13 @@ const HEADLESS = process.env.HEADLESS === undefined ? 'new' : process.env.HEADLE
 
     const buy = async (user) => {
         console.log(`Buy for ${user.email}`)
-        await page.goto('http://localhost:3000', {timeout: 30000})
+        await page.goto(URL, {timeout: 30000})
         await page.click(".auth-link")
         await page.click("#spree_user_email")
         await page.type("#spree_user_email", user.email)
         await page.type("#spree_user_password", "password")
         await page.click("[name='commit']")
-        await page.goto('http://localhost:3000')
+        await page.goto(URL)
         await page.click("#product_4 img")
         await page.click("#add-to-cart-button")
         await page.waitForSelector('#checkout-link', {visible: true})
@@ -41,7 +44,6 @@ const HEADLESS = process.env.HEADLESS === undefined ? 'new' : process.env.HEADLE
             return
         }
         await page.click("#checkout-link")
-        await page.$eval(selector, element => element.value = '');
         await typeText("#order_bill_address_attributes_name", "Big Building")
         await typeText("#order_bill_address_attributes_address1", "Narrow Avenue")
         await typeText("#order_bill_address_attributes_address2", "Super Street")
@@ -69,7 +71,7 @@ const HEADLESS = process.env.HEADLESS === undefined ? 'new' : process.env.HEADLE
         } catch (e) {
             // Do nothing
         } finally {
-            await page.goto('http://localhost:3000', {timeout: 30000})
+            await page.goto(URL, {timeout: 30000})
             await page.click(".auth-link")
             await page.click(".button-primary")
         }
