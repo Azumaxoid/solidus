@@ -217,7 +217,6 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    newrelic_rpm (9.2.2)
     nio4r (2.5.9)
     nokogiri (1.14.4-x86_64-darwin)
       racc (~> 1.4)
@@ -477,7 +476,6 @@ DEPENDENCIES
   ffaker (~> 2.13)
   importmap-rails
   jbuilder
-  newrelic_rpm
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   rails-controller-testing (~> 1.0.5)
