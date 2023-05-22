@@ -2,7 +2,10 @@
 . ~/.bashrc
 cd ~/solidus
 bundle exec rails server -b 0.0.0.0 > /tmp/solidus.log &
-echo "サンプルサービスが起動しました。 http://$HOSTNAME.$_SANDBOX_ID.instruqt.io:3000 にアクセスしてみましょう。"
+echo "サンプルサービス起動中です。数十秒後に http://$HOSTNAME.$_SANDBOX_ID.instruqt.io:3000 にアクセスしてみましょう。"
+sleep 10
+echo "New RelicのAPMへのアクセスリンクはこちらです。"
+grep Reporting ~/solidus/log/newrelic_agent.log | sed "s|.*Reporting to: ||"
 export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 nvm install 16 && nvm use 16
 cd ~/solidus/scripts/puppeteer
